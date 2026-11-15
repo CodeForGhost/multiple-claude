@@ -1,0 +1,14 @@
+{
+  "name": "bridge",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Share projects between machines so Claude Code on one can ask about and change code on the other.",
+  "scripts": {
+    "setup": "npm --prefix packages/bridge install && npm --prefix app install",
+    "build:daemon": "npm --prefix packages/bridge run build",
+    "test": "npm --prefix packages/bridge test",
+    "typecheck": "npm --prefix packages/bridge run typecheck",
+    "app:dev": "npm --prefix app run dev",
+    "app:build": "npm --prefix app run build"
+  }
+}

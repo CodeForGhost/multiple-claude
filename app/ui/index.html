@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bridge</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="top">
+    <div class="brand">
+      <svg viewBox="0 0 32 32" width="28" height="28" aria-hidden="true">
+        <rect x="1" y="1" width="30" height="30" rx="8" fill="var(--accent)" />
+        <path d="M8 20 A9 9 0 0 1 24 20" fill="none" stroke="#fff" stroke-width="2.4" />
+        <circle cx="8" cy="20" r="3" fill="#fff" /><circle cx="24" cy="20" r="3" fill="#fff" />
+      </svg>
+      <div>
+        <div class="title">Bridge</div>
+        <div class="sub" id="device-line">Connecting…</div>
+      </div>
+    </div>
+    <div class="status" id="conn-status"><span class="dot"></span><span>starting</span></div>
+  </header>
+
+  <div id="fatal" class="banner error" hidden></div>
+  <div id="toast" class="toast" hidden></div>
+
+  <main>
+    <!-- Devices -->
+    <section class="card" id="devices-card">
+      <div class="card-head">
+        <h2>Devices</h2>
+        <div class="actions">
+          <button id="btn-pair" class="primary">Pair a device</button>
+          <button id="btn-join">Join a device</button>
+        </div>
+      </div>
+      <div id="pairing-panel" class="panel" hidden></div>
+      <div id="join-panel" class="panel" hidden>
+        <p class="hint">On the other device click <b>Pair a device</b>, then enter its address and code here.</p>
+        <div id="discovered"></div>
+        <form id="join-form" class="row wrap">
+          <input id="join-host" placeholder="Address, e.g. 192.168.1.20 or laptop.tailnet.ts.net" required />
+          <input id="join-code" placeholder="6-digit code" inputmode="numeric" maxlength="6" required class="code-input" />
+          <button class="primary" type="submit">Join</button>
+        </form>
+      </div>
+      <ul class="list" id="peer-list"></ul>
+    </section>
+
+    <!-- Shared from this device -->
+    <section class="card">
+      <div class="card-head">
+        <h2>Shared from this device</h2>
+        <div class="actions">
+          <button id="btn-pick" class="primary">Share a folder…</button>
+          <button id="btn-suggest">Suggestions</button>
+        </div>
+      </div>
+      <div id="suggest-panel" class="panel" hidden></div>
+      <ul class="list" id="project-list"></ul>
+    </section>
+
+    <!-- Available from other devices -->
+    <section class="card">
+      <div class="card-head">
+        <h2>Available from other devices</h2>
+        <div class="actions"><button id="btn-remote-refresh">Refresh</button></div>
+      </div>
+      <p class="hint">Claude Code on this machine reaches these through the Bridge tools
+        (<code>ask</code>, <code>change</code>, <code>apply</code>…). The folder you run Claude in is linked to the right project automatically.</p>
+      <ul class="list" id="remote-list"></ul>
+    </section>
+
+    <!-- Activity -->
+    <section class="card">
+      <div class="card-head"><h2>Requests to this device</h2></div>
+      <ul class="list" id="job-list"></ul>
+    </section>
+
+    <!-- Settings -->
+    <section class="card">
+      <div class="card-head"><h2>Settings</h2></div>
+      <div class="settings">
+        <div class="setting">
+          <div>
+            <div class="label">Claude Code integration</div>
+            <div class="hint" id="mcp-status">Checking…</div>
+          </div>
+          <button id="btn-mcp">Connect Claude Code</button>
+        </div>
+        <div class="setting">
+          <div>
+            <div class="label">Start Bridge at login</div>
+            <div class="hint">Keeps this device reachable whenever it's on.</div>
+          </div>
+          <label class="switch"><input type="checkbox" id="chk-autostart" /><span></span></label>
+        </div>
+        <div class="setting">
+          <div>
+            <div class="label">AI project summaries</div>
+            <div class="hint">When sharing, run one quick read-only Claude pass to summarise the API for other devices.</div>
+          </div>
+          <label class="switch"><input type="checkbox" id="chk-ai" /><span></span></label>
+        </div>
+        <form class="setting" id="name-form">
+          <div class="grow">
+            <div class="label">Device name</div>
+            <input id="device-name" />
+          </div>
+          <button type="submit">Save</button>
+        </form>
+        <form class="setting" id="roots-form">
+          <div class="grow">
+            <div class="label">Project folders to scan for suggestions</div>
+            <input id="scan-roots" placeholder="e.g. F:\Projects; ~/code (separate with ;)" />
+          </div>
+          <button type="submit">Save</button>
+        </form>
+        <div class="setting">
+          <div>
+            <div class="label">Daemon</div>
+            <div class="hint" id="daemon-info"></div>
+          </div>
+          <button id="btn-restart">Restart</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <dialog id="modal">
+    <div class="modal-head"><h3 id="modal-title"></h3><button id="modal-close" aria-label="Close">✕</button></div>
+    <div id="modal-body"></div>
+  </dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>
