@@ -29,6 +29,8 @@ Every device works both ways: each one can share projects and use the projects o
 
 ---
 
+> **Setting up the laptop + Mac mini pair?** Follow the step-by-step guide: [docs/MAC_MINI_SETUP.md](docs/MAC_MINI_SETUP.md).
+
 ## Requirements (each machine)
 
 - **Node.js 20+** (the daemon runs on Node)
